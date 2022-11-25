@@ -97,7 +97,7 @@ class PhpFpmCollector(diamond.collector.Collector):
             'max_children_reached',
             'slow_requests'
         ]
-        for k, v in j.items():
+        for k, v in list(j.items()):
             #
             # php-fpm has spaces in the keys so lets replace all spaces with _
             k = k.replace(" ", "_")

@@ -103,15 +103,15 @@ class IPCollector(diamond.collector.Collector):
             data = data.split()
 
             # Zip up the keys and values
-            for i in xrange(1, len(header)):
+            for i in range(1, len(header)):
                 metrics[header[i]] = data[i]
 
-        for metric_name in metrics.keys():
+        for metric_name in list(metrics.keys()):
             if ((len(self.config['allowed_names']) > 0 and
                  metric_name not in self.config['allowed_names'])):
                 continue
 
-            value = long(metrics[metric_name])
+            value = int(metrics[metric_name])
 
             # Publish the metric
             if metric_name in self.GAUGES:

@@ -196,16 +196,16 @@ class Collector(object):
             config = load_config(self.configfile)
 
             if 'collectors' in config:
-                if 'default' in config['collectors']:
-                    self.config.merge(config['collectors']['default'])
+                if 'collectors.default' in config:
+                    self.config.merge(config['collectors.default'])
 
                 if self.name in config['collectors']:
                     self.config.merge(config['collectors'][self.name])
 
         if override_config is not None:
             if 'collectors' in override_config:
-                if 'default' in override_config['collectors']:
-                    self.config.merge(override_config['collectors']['default'])
+                if 'collectors.default' in override_config:
+                    self.config.merge(override_config['collectors.default'])
 
                 if self.name in override_config['collectors']:
                     self.config.merge(override_config['collectors'][self.name])

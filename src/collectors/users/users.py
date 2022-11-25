@@ -65,7 +65,7 @@ class UsersCollector(diamond.collector.Collector):
                     metrics[utmp.ut_user] = metrics.get(utmp.ut_user, 0) + 1
                     metrics['total'] = metrics['total'] + 1
 
-        for metric_name in metrics.keys():
+        for metric_name in list(metrics.keys()):
             self.publish(metric_name, metrics[metric_name])
 
         return True

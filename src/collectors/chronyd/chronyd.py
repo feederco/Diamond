@@ -65,7 +65,7 @@ class ChronydCollector(diamond.collector.Collector):
             return ""
 
     def collect(self):
-        output = self.get_output()
+        output = self.get_output().decode('utf-8')
 
         for line in output.strip().split("\n"):
             m = LINE_PATTERN.search(line)

@@ -85,5 +85,5 @@ class ConnTrackCollector(diamond.collector.Collector):
                            'nf_conntrack/ip_conntrack kernel module was '
                            'not loaded')
         else:
-            for key in collected.keys():
+            for key in list(collected.keys()):
                 self.publish(key, collected[key])

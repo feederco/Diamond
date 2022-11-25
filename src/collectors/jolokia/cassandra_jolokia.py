@@ -56,7 +56,7 @@ class CassandraJolokiaCollector(JolokiaCollector):
 
     def update_config(self, config):
         if 'percentiles' in config:
-            self.percentiles = map(int, config['percentiles'])
+            self.percentiles = list(map(int, config['percentiles']))
         if 'histogram_regex' in config:
             self.histogram_regex = re.compile(config['histogram_regex'])
 

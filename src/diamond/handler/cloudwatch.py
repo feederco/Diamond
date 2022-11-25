@@ -93,9 +93,9 @@ class cloudwatchHandler(Handler):
                              'collect_without_dimension', 'dimensions')
 
         self.rules = []
-        for key_name, section in self.config.items():
+        for key_name, section in list(self.config.items()):
             if section.__class__ is Section:
-                keys = section.keys()
+                keys = list(section.keys())
                 rules = self.get_default_rule_config()
                 for key in keys:
                     if key not in self.valid_config:

@@ -256,7 +256,7 @@ class XFSCollector(diamond.collector.Collector):
             items = line.rstrip().split()
             stats[items[0]] = [int(a) for a in items[1:]]
 
-        for key in stats.keys():
+        for key in list(stats.keys()):
             for item in enumerate(data_structure[key]):
                 metric_name = '.'.join([key, item[1]])
                 value = stats[key][item[0]]

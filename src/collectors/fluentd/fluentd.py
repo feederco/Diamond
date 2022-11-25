@@ -61,7 +61,7 @@ class FluentdCollector(diamond.collector.Collector):
     def parse_api_output(self, status):
         result = []
         for p in status.get('plugins'):
-            if p['type'] in self.config['collect'].keys():
+            if p['type'] in list(self.config['collect'].keys()):
                 for m in self.config['collect'].get(p['type']):
                     tag = ".".join([p['type'], m])
                     result.append((tag, p.get(m)))

@@ -173,7 +173,7 @@ class NetscalerSNMPCollector(parent_SNMPCollector):
         timestamp = time.time()
 
         # Collect Netscaler System OIDs
-        for k, v in self.NETSCALER_SYSTEM_GUAGES.items():
+        for k, v in list(self.NETSCALER_SYSTEM_GUAGES.items()):
             # Get Metric Name and Value
             metricName = '.'.join([k])
             metricValue = int(self.get(v, host, port, community)[v])
@@ -185,7 +185,7 @@ class NetscalerSNMPCollector(parent_SNMPCollector):
             self.publish_metric(metric)
 
         # Collect Netscaler System Counter OIDs
-        for k, v in self.NETSCALER_SYSTEM_COUNTERS.items():
+        for k, v in list(self.NETSCALER_SYSTEM_COUNTERS.items()):
             # Get Metric Name and Value
             metricName = '.'.join([k])
             # Get Metric Path
@@ -199,8 +199,8 @@ class NetscalerSNMPCollector(parent_SNMPCollector):
             self.publish_metric(metric)
 
         # Collect Netscaler Services
-        serviceNames = [v.strip("\'") for v in self.walk(
-            self.NETSCALER_SERVICE_NAMES, host, port, community).values()]
+        serviceNames = [v.strip("\'") for v in list(self.walk(
+            self.NETSCALER_SERVICE_NAMES, host, port, community).values())]
 
         for serviceName in serviceNames:
             # Get Service Name in OID form
@@ -215,8 +215,7 @@ class NetscalerSNMPCollector(parent_SNMPCollector):
                                        community)[serviceTypeOid].strip("\'"))
 
             # Filter excluded service types
-            if serviceType in map(lambda v: int(v),
-                                  self.config.get('exclude_service_type')):
+            if serviceType in [int(v) for v in self.config.get('exclude_service_type')]:
                 continue
 
             # Get Service State
@@ -228,11 +227,10 @@ class NetscalerSNMPCollector(parent_SNMPCollector):
                                         community)[serviceStateOid].strip("\'"))
 
             # Filter excluded service states
-            if serviceState in map(lambda v: int(v),
-                                   self.config.get('exclude_service_state')):
+            if serviceState in [int(v) for v in self.config.get('exclude_service_state')]:
                 continue
 
-            for k, v in self.NETSCALER_SERVICE_GUAGES.items():
+            for k, v in list(self.NETSCALER_SERVICE_GUAGES.items()):
                 serviceGuageOid = ".".join(
                     [v, self._convert_from_oid(serviceNameOid)])
                 # Get Metric Name
@@ -254,8 +252,8 @@ class NetscalerSNMPCollector(parent_SNMPCollector):
                 self.publish_metric(metric)
 
         # Collect Netscaler Vservers
-        vserverNames = [v.strip("\'") for v in self.walk(
-            self.NETSCALER_VSERVER_NAMES, host, port, community).values()]
+        vserverNames = [v.strip("\'") for v in list(self.walk(
+            self.NETSCALER_VSERVER_NAMES, host, port, community).values())]
 
         for vserverName in vserverNames:
             # Get Vserver Name in OID form
@@ -270,8 +268,7 @@ class NetscalerSNMPCollector(parent_SNMPCollector):
                                        community)[vserverTypeOid].strip("\'"))
 
             # filter excluded vserver types
-            if vserverType in map(lambda v: int(v),
-                                  self.config.get('exclude_vserver_type')):
+            if vserverType in [int(v) for v in self.config.get('exclude_vserver_type')]:
                 continue
 
             # Get Service State
@@ -283,11 +280,10 @@ class NetscalerSNMPCollector(parent_SNMPCollector):
                                         community)[vserverStateOid].strip("\'"))
 
             # Filter excluded vserver state
-            if vserverState in map(lambda v: int(v),
-                                   self.config.get('exclude_vserver_state')):
+            if vserverState in [int(v) for v in self.config.get('exclude_vserver_state')]:
                 continue
 
-            for k, v in self.NETSCALER_VSERVER_GUAGES.items():
+            for k, v in list(self.NETSCALER_VSERVER_GUAGES.items()):
                 vserverGuageOid = ".".join(
                     [v, self._convert_from_oid(vserverNameOid)])
                 # Get Metric Name

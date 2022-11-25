@@ -85,7 +85,7 @@ class UserScriptsCollector(diamond.collector.Collector):
                 self.log.error("%s returned error output (stderr): %s" %
                                (absolutescriptpath, err))
             # Use filter to remove empty lines of output
-            for line in filter(None, out.split('\n')):
+            for line in [_f for _f in out.split('\n') if _f]:
                 # Ignore invalid lines
                 try:
                     name, value = line.split()

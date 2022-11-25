@@ -16,7 +16,7 @@ For now only monitors replication load
 
 """
 
-from __future__ import division
+
 
 try:
     import MySQLdb

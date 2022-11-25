@@ -67,7 +67,7 @@ class DiskTemperatureCollector(diamond.collector.Collector):
             # If the regex has a capture group for pretty printing, pick
             # the last matched capture group
             if self.devices.groups > 0:
-                key = '.'.join(filter(None, [g for g in m.groups()]))
+                key = '.'.join([_f for _f in [g for g in m.groups()] if _f])
 
             return {key: self.get_temp(os.path.join('/dev', device))}
 
@@ -88,7 +88,7 @@ class DiskTemperatureCollector(diamond.collector.Collector):
             instances.update(self.match_device(device, '/dev/disk/by-id/'))
 
         metrics = {}
-        for device, p in instances.items():
+        for device, p in list(instances.items()):
             output = p.communicate()[0].strip()
 
             try:
@@ -96,5 +96,5 @@ class DiskTemperatureCollector(diamond.collector.Collector):
             except:
                 self.log.warn('Disk temperature retrieval failed on ' + device)
 
-        for metric in metrics.keys():
+        for metric in list(metrics.keys()):
             self.publish(metric, metrics[metric])

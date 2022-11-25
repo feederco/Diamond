@@ -78,5 +78,5 @@ class XENCollector(Collector):
             'TotalCores': totalcores,
             'FreeCores': (totalcores - coresallocated)
         }
-        for k in results.keys():
+        for k in list(results.keys()):
             self.publish(k, results[k], 0)

@@ -11,7 +11,7 @@ Collect stats via MX4J from Kafka
 from urllib.error import URLError
 from urllib.request import urlopen
 
-from urllib import urlencode
+from urllib.parse import urlencode
 
 try:
     from xml.etree import ElementTree
@@ -32,7 +32,7 @@ class KafkaCollector(diamond.collector.Collector):
         'float': float,
         'int': int,
         'java.lang.Object': float,
-        'long': long,
+        'long': int,
     }
 
     def get_default_config_help(self):
@@ -186,5 +186,5 @@ class KafkaCollector(diamond.collector.Collector):
             metrics.update(stats)
 
         # Publish stats
-        for metric, value in metrics.iteritems():
+        for metric, value in metrics.items():
             self.publish(metric, value)

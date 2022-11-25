@@ -39,7 +39,7 @@ You can specify an arbitrary amount of regions
 
 """
 import calendar
-import cPickle
+import pickle
 import datetime
 import functools
 import re
@@ -76,7 +76,7 @@ class memoized(object):
 
     def __call__(self, *args, **kwargs):
         # If the function args cannot be used as a cache hash key, fail fast
-        key = cPickle.dumps((args, kwargs))
+        key = pickle.dumps((args, kwargs))
         try:
             return self.cache[key]
         except KeyError:
@@ -269,9 +269,9 @@ class ElbCollector(diamond.collector.Collector):
         # instead of wasting space to store/emit a zero.
         if len(stats) == 0 and metric.default_to_zero:
             stats.append({
-                u'Timestamp': start_time,
+                'Timestamp': start_time,
                 metric.aws_type: 0.0,
-                u'Unit': u'Count'
+                'Unit': 'Count'
             })
 
         for stat in stats:
@@ -317,7 +317,7 @@ class ElbCollector(diamond.collector.Collector):
         end_time = now.replace(second=0, microsecond=0)
         start_time = end_time - datetime.timedelta(seconds=self.interval)
 
-        for region in self.config['regions'].keys():
+        for region in list(self.config['regions'].keys()):
             region_cw_conn = cloudwatch.connect_to_region(region,
                                                           **self.auth_kwargs)
             self.process_region(region_cw_conn, start_time, end_time)

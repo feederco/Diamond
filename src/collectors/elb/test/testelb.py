@@ -78,19 +78,19 @@ class TestElbCollector(CollectorTestCase):
         ts = datetime.datetime.utcnow().replace(second=0, microsecond=0)
 
         cw_conn.get_metric_statistics.side_effect = [
-            [{u'Timestamp': ts, u'Average': 1.0, u'Unit': u'Count'}],
-            [{u'Timestamp': ts, u'Average': 2.0, u'Unit': u'Count'}],
-            [{u'Timestamp': ts, u'Sum': 3.0, u'Unit': u'Count'}],
-            [{u'Timestamp': ts, u'Average': 4.0, u'Unit': u'Count'}],
-            [{u'Timestamp': ts, u'Sum': 6.0, u'Unit': u'Count'}],
-            [{u'Timestamp': ts, u'Sum': 7.0, u'Unit': u'Count'}],
-            [{u'Timestamp': ts, u'Sum': 8.0, u'Unit': u'Count'}],
-            [{u'Timestamp': ts, u'Sum': 9.0, u'Unit': u'Count'}],
-            [{u'Timestamp': ts, u'Sum': 10.0, u'Unit': u'Count'}],
-            [{u'Timestamp': ts, u'Sum': 11.0, u'Unit': u'Count'}],
-            [{u'Timestamp': ts, u'Sum': 12.0, u'Unit': u'Count'}],
-            [{u'Timestamp': ts, u'Maximum': 13.0, u'Unit': u'Count'}],
-            [{u'Timestamp': ts, u'Sum': 14.0, u'Unit': u'Count'}],
+            [{'Timestamp': ts, 'Average': 1.0, 'Unit': 'Count'}],
+            [{'Timestamp': ts, 'Average': 2.0, 'Unit': 'Count'}],
+            [{'Timestamp': ts, 'Sum': 3.0, 'Unit': 'Count'}],
+            [{'Timestamp': ts, 'Average': 4.0, 'Unit': 'Count'}],
+            [{'Timestamp': ts, 'Sum': 6.0, 'Unit': 'Count'}],
+            [{'Timestamp': ts, 'Sum': 7.0, 'Unit': 'Count'}],
+            [{'Timestamp': ts, 'Sum': 8.0, 'Unit': 'Count'}],
+            [{'Timestamp': ts, 'Sum': 9.0, 'Unit': 'Count'}],
+            [{'Timestamp': ts, 'Sum': 10.0, 'Unit': 'Count'}],
+            [{'Timestamp': ts, 'Sum': 11.0, 'Unit': 'Count'}],
+            [{'Timestamp': ts, 'Sum': 12.0, 'Unit': 'Count'}],
+            [{'Timestamp': ts, 'Maximum': 13.0, 'Unit': 'Count'}],
+            [{'Timestamp': ts, 'Sum': 14.0, 'Unit': 'Count'}],
         ]
 
         cloudwatch.connect_to_region = Mock()
@@ -154,19 +154,19 @@ class TestElbCollector(CollectorTestCase):
         ts = datetime.datetime.utcnow().replace(second=0, microsecond=0)
 
         cw_conn.get_metric_statistics.side_effect = [
-            [{u'Timestamp': ts, u'Average': 1.0, u'Unit': u'Count'}],
-            [{u'Timestamp': ts, u'Average': 2.0, u'Unit': u'Count'}],
-            [{u'Timestamp': ts, u'Sum': 3.0, u'Unit': u'Count'}],
-            [{u'Timestamp': ts, u'Average': 4.0, u'Unit': u'Count'}],
-            [{u'Timestamp': ts, u'Sum': 6.0, u'Unit': u'Count'}],
-            [{u'Timestamp': ts, u'Sum': 7.0, u'Unit': u'Count'}],
-            [{u'Timestamp': ts, u'Sum': 8.0, u'Unit': u'Count'}],
-            [{u'Timestamp': ts, u'Sum': 9.0, u'Unit': u'Count'}],
-            [{u'Timestamp': ts, u'Sum': 10.0, u'Unit': u'Count'}],
-            [{u'Timestamp': ts, u'Sum': 11.0, u'Unit': u'Count'}],
-            [{u'Timestamp': ts, u'Sum': 12.0, u'Unit': u'Count'}],
-            [{u'Timestamp': ts, u'Maximum': 13.0, u'Unit': u'Count'}],
-            [{u'Timestamp': ts, u'Sum': 14.0, u'Unit': u'Count'}],
+            [{'Timestamp': ts, 'Average': 1.0, 'Unit': 'Count'}],
+            [{'Timestamp': ts, 'Average': 2.0, 'Unit': 'Count'}],
+            [{'Timestamp': ts, 'Sum': 3.0, 'Unit': 'Count'}],
+            [{'Timestamp': ts, 'Average': 4.0, 'Unit': 'Count'}],
+            [{'Timestamp': ts, 'Sum': 6.0, 'Unit': 'Count'}],
+            [{'Timestamp': ts, 'Sum': 7.0, 'Unit': 'Count'}],
+            [{'Timestamp': ts, 'Sum': 8.0, 'Unit': 'Count'}],
+            [{'Timestamp': ts, 'Sum': 9.0, 'Unit': 'Count'}],
+            [{'Timestamp': ts, 'Sum': 10.0, 'Unit': 'Count'}],
+            [{'Timestamp': ts, 'Sum': 11.0, 'Unit': 'Count'}],
+            [{'Timestamp': ts, 'Sum': 12.0, 'Unit': 'Count'}],
+            [{'Timestamp': ts, 'Maximum': 13.0, 'Unit': 'Count'}],
+            [{'Timestamp': ts, 'Sum': 14.0, 'Unit': 'Count'}],
         ]
 
         cloudwatch.connect_to_region = Mock()

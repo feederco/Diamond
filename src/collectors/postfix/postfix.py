@@ -24,7 +24,7 @@ import diamond.collector
 
 from diamond.collector import str_to_bool
 
-DOTS_TO_UNDERS = {ord(u'.'): u'_'}
+DOTS_TO_UNDERS = {ord('.'): '_'}
 
 
 class PostfixCollector(diamond.collector.Collector):
@@ -95,22 +95,22 @@ class PostfixCollector(diamond.collector.Collector):
         if not data:
             return
 
-        if str_to_bool(self.config['include_clients']) and u'clients' in data:
-            for client, value in data['clients'].iteritems():
+        if str_to_bool(self.config['include_clients']) and 'clients' in data:
+            for client, value in data['clients'].items():
                 # translate dots to underscores in client names
-                metric = u'.'.join(['clients',
+                metric = '.'.join(['clients',
                                     client.translate(DOTS_TO_UNDERS)])
 
                 dvalue = self.derivative(metric, value)
 
                 self.publish(metric, dvalue, precision=4)
 
-        for action in (u'in', u'recv', u'send'):
+        for action in ('in', 'recv', 'send'):
             if action not in data:
                 continue
 
-            for sect, stats in data[action].iteritems():
-                for status, value in stats.iteritems():
+            for sect, stats in data[action].items():
+                for status, value in stats.items():
                     metric = '.'.join([action,
                                        sect,
                                        status.translate(DOTS_TO_UNDERS)])
@@ -119,8 +119,8 @@ class PostfixCollector(diamond.collector.Collector):
 
                     self.publish(metric, dvalue, precision=4)
 
-        if u'local' in data:
-            for key, value in data[u'local'].iteritems():
+        if 'local' in data:
+            for key, value in data['local'].items():
                 metric = '.'.join(['local', key])
 
                 dvalue = self.derivative(metric, value)

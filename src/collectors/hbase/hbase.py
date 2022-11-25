@@ -62,7 +62,7 @@ class HBaseCollector(diamond.collector.Collector):
                     key, value = metric.split('=', 1)
                     metrics[key] = value
 
-            for metric in metrics.keys():
+            for metric in list(metrics.keys()):
                 try:
 
                     if data['name'] == 'jvm.metrics':

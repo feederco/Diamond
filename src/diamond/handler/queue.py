@@ -7,9 +7,9 @@ do not try to use it as a normal handler
 
 from diamond.handler.Handler import Handler
 try:
-    import Queue
+    import queue
 except ImportError:
-    import queue as Queue
+    from . import queue as Queue
 
 
 
@@ -38,7 +38,7 @@ class QueueHandler(Handler):
         """
         try:
             self.queue.put(metric, block=False)
-        except Queue.Full:
+        except queue.Full:
             self._throttle_error('Queue full, check handlers for delays')
 
     def flush(self):
@@ -52,5 +52,5 @@ class QueueHandler(Handler):
         # Send a None down the queue to indicate a flush
         try:
             self.queue.put(None, block=False)
-        except Queue.Full:
+        except queue.Full:
             self._throttle_error('Queue full, check handlers for delays')

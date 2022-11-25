@@ -12,8 +12,8 @@ Collect stats from Apache HTTPD server using mod_status
 """
 
 import re
-import httplib
-import urlparse
+import http.client as httplib
+from urllib.parse import urlparse
 import diamond.collector
 
 
@@ -59,7 +59,7 @@ class HttpdCollector(diamond.collector.Collector):
         return config
 
     def collect(self):
-        for nickname in self.urls.keys():
+        for nickname in list(self.urls.keys()):
             url = self.urls[nickname]
 
             try:

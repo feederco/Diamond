@@ -71,14 +71,14 @@ class BeanstalkdCollector(diamond.collector.Collector):
 
         info = self._get_stats()
 
-        for stat, value in info['instance'].items():
+        for stat, value in list(info['instance'].items()):
             if stat not in self.SKIP_LIST:
                 self.publish(stat, value,
                              metric_type=self.get_metric_type(stat))
 
         for tube_stats in info['tubes']:
             tube = tube_stats['name']
-            for stat, value in tube_stats.items():
+            for stat, value in list(tube_stats.items()):
                 if stat != 'name':
                     self.publish('tubes.%s.%s' % (tube, stat), value,
                                  metric_type=self.get_metric_type(stat))

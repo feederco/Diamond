@@ -10,9 +10,9 @@ from mock import Mock
 from mock import patch
 
 try:
-    from cStringIO import StringIO
+    from io import StringIO
 except ImportError:
-    from StringIO import StringIO
+    from io import StringIO
 
 try:
     from docker import Client
@@ -29,10 +29,10 @@ for root, dirnames, filenames in os.walk(fixtures_path):
     fixtures.append([root, dirnames, filenames])
 
 docker_fixture = [
-    {u'Id': u'c3341726a9b4235a35b390c5f6f28e5a6869879a48da1d609db8f6bf4275bdc5',
-     u'Names': [u'/testcontainer']},
-    {u'Id': u'9c151939e20682b924d7299875e94a4aabbe946b30b407f89e276507432c625b',
-     u'Names': None}]
+    {'Id': 'c3341726a9b4235a35b390c5f6f28e5a6869879a48da1d609db8f6bf4275bdc5',
+     'Names': ['/testcontainer']},
+    {'Id': '9c151939e20682b924d7299875e94a4aabbe946b30b407f89e276507432c625b',
+     'Names': None}]
 
 
 def run_only_if_docker_client_is_available(func):

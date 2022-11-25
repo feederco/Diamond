@@ -128,7 +128,7 @@ class SNMPInterfaceCollector(parent_SNMPCollector):
         # Get Interface Indexes
         ifIndexOid = '.'.join([self.IF_MIB_INDEX_OID])
         ifIndexData = self.walk(ifIndexOid, host, port, community)
-        ifIndexes = [v for v in ifIndexData.values()]
+        ifIndexes = [v for v in list(ifIndexData.values())]
 
         for ifIndex in ifIndexes:
             # Get Interface Type
@@ -145,7 +145,7 @@ class SNMPInterfaceCollector(parent_SNMPCollector):
             ifName = re.sub(r'(\"|\')', '', ifName)
 
             # Get Gauges
-            for gaugeName, gaugeOid in self.IF_MIB_GAUGE_OID_TABLE.items():
+            for gaugeName, gaugeOid in list(self.IF_MIB_GAUGE_OID_TABLE.items()):
                 ifGaugeOid = '.'.join([self.IF_MIB_GAUGE_OID_TABLE[gaugeName],
                                        ifIndex])
                 ifGaugeData = self.get(ifGaugeOid, host, port, community)
@@ -166,7 +166,7 @@ class SNMPInterfaceCollector(parent_SNMPCollector):
                 self.publish_gauge(metricPath, metricValue)
 
             # Get counters (64bit)
-            counterItems = self.IF_MIB_COUNTER_OID_TABLE.items()
+            counterItems = list(self.IF_MIB_COUNTER_OID_TABLE.items())
             for counterName, counterOid in counterItems:
                 ifCounterOid = '.'.join(
                     [self.IF_MIB_COUNTER_OID_TABLE[counterName], ifIndex])

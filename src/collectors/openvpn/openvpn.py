@@ -37,7 +37,7 @@ You can also specify multiple and mixed instances::
 import socket
 import diamond.collector
 import os.path
-import urlparse
+from urllib.parse import urlparse
 import time
 
 
@@ -237,7 +237,7 @@ class OpenVPNCollector(diamond.collector.Collector):
     def publish_number(self, key, value):
         key = key.replace('/', '-').replace(' ', '_').lower()
         try:
-            value = long(value)
+            value = int(value)
         except ValueError:
             self.log.error('OpenVPN expected a number for "%s", got "%s"',
                            key, value)

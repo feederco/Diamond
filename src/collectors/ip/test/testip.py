@@ -9,9 +9,9 @@ from mock import Mock
 from mock import patch
 
 try:
-    from cStringIO import StringIO
+    from io import StringIO
 except ImportError:
-    from StringIO import StringIO
+    from io import StringIO
 
 from ip import IPCollector
 
@@ -116,7 +116,7 @@ Ip: 0 1 2
             'FragCreates':      0,
         }
 
-        self.setUp(allowed_names=metrics.keys())
+        self.setUp(allowed_names=list(metrics.keys()))
 
         IPCollector.PROC = [
             self.getFixturePath('proc_net_snmp_1'),

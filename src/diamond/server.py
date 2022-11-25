@@ -147,7 +147,7 @@ class Server(object):
                 ##############################################################
 
                 running_collectors = []
-                for collector, config in self.config['collectors'].iteritems():
+                for collector, config in self.config['collectors'].items():
                     if config.get('enabled', False) is not True:
                         continue
                     running_collectors.append(collector)
@@ -163,7 +163,7 @@ class Server(object):
 
                 collector_classes = dict(
                     (cls.__name__.split('.')[-1], cls)
-                    for cls in collectors.values()
+                    for cls in list(collectors.values())
                 )
 
                 load_delay = self.config['server'].get('collectors_load_delay',

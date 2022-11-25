@@ -60,7 +60,7 @@ class MemoryLxcCollector(Collector):
                 self.log.debug("Trying to collect from %s", filename)
                 collected[metric_name] = self._read_file(filename)
 
-        for key in collected.keys():
+        for key in list(collected.keys()):
             if collected[key] is None:
                 continue
 

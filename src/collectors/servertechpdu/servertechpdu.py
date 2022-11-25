@@ -76,9 +76,9 @@ class ServerTechPDUCollector(parent_SNMPCollector):
         inputFeeds = {}
 
         # Collect PDU input gauge values
-        for gaugeName, gaugeOid in self.PDU_SYSTEM_GAUGES.items():
+        for gaugeName, gaugeOid in list(self.PDU_SYSTEM_GAUGES.items()):
             systemGauges = self.walk(gaugeOid, host, port, community)
-            for o, gaugeValue in systemGauges.items():
+            for o, gaugeValue in list(systemGauges.items()):
                 # Get Metric Name
                 metricName = gaugeName
                 # Get Metric Value
@@ -94,15 +94,15 @@ class ServerTechPDUCollector(parent_SNMPCollector):
         # Collect PDU input feed names
         inputFeedNames = self.walk(
             self.PDU_INFEED_NAMES, host, port, community)
-        for o, inputFeedName in inputFeedNames.items():
+        for o, inputFeedName in list(inputFeedNames.items()):
             # Extract input feed name
             inputFeed = ".".join(o.split(".")[-2:])
             inputFeeds[inputFeed] = inputFeedName
 
         # Collect PDU input gauge values
-        for gaugeName, gaugeOid in self.PDU_INFEED_GAUGES.items():
+        for gaugeName, gaugeOid in list(self.PDU_INFEED_GAUGES.items()):
             inputFeedGauges = self.walk(gaugeOid, host, port, community)
-            for o, gaugeValue in inputFeedGauges.items():
+            for o, gaugeValue in list(inputFeedGauges.items()):
                 # Extract input feed name
                 inputFeed = ".".join(o.split(".")[-2:])
 

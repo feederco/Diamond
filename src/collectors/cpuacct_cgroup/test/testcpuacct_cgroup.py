@@ -8,9 +8,9 @@ from test import unittest
 from mock import patch
 
 try:
-    from cStringIO import StringIO
+    from io import StringIO
 except ImportError:
-    from StringIO import StringIO
+    from io import StringIO
 
 from diamond.collector import Collector
 from cpuacct_cgroup import CpuAcctCgroupCollector

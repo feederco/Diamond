@@ -69,7 +69,7 @@ class OpenstackSwiftCollector(diamond.collector.Collector):
             self.publish('dispersion.errors', len(stderr.split('\n')) - 1)
             data = json.loads(stdout)
             for t in ('object', 'container'):
-                for (k, v) in data[t].items():
+                for (k, v) in list(data[t].items()):
                     self.publish('dispersion.%s.%s' % (t, k), v)
 
         # container metrics returned by stat <container>

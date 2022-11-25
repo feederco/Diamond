@@ -21,7 +21,7 @@ import copy
 from urllib.request import urlopen
 import diamond.collector
 import json
-from urllib import urlparse
+from urllib.parse import urlparse
 
 import diamond.collector
 
@@ -102,7 +102,7 @@ class MesosCollector(diamond.collector.Collector):
         """Compute cpu usage based on cpu time spent compared to elapsed time
         """
 
-        for executor_id, cur_data in cur_read.items():
+        for executor_id, cur_data in list(cur_read.items()):
             if executor_id in self.executors_prev_read:
                 prev_data = self.executors_prev_read[executor_id]
                 prev_stats = prev_data['statistics']
@@ -121,7 +121,7 @@ class MesosCollector(diamond.collector.Collector):
     def _add_cpu_percent(self, cur_read):
         """Compute cpu percent basing on the provided utilisation
         """
-        for executor_id, cur_data in cur_read.items():
+        for executor_id, cur_data in list(cur_read.items()):
             stats = cur_data['statistics']
             cpus_limit = stats.get('cpus_limit')
             cpus_utilisation = stats.get('cpus_utilisation')
@@ -132,7 +132,7 @@ class MesosCollector(diamond.collector.Collector):
         """Compute memory percent utilisation based on the
         mem_rss_bytes and mem_limit_bytes
         """
-        for executor_id, cur_data in cur_read.items():
+        for executor_id, cur_data in list(cur_read.items()):
             stats = cur_data['statistics']
             mem_rss_bytes = stats.get('mem_rss_bytes')
             mem_limit_bytes = stats.get('mem_limit_bytes')
@@ -239,7 +239,7 @@ class MesosCollector(diamond.collector.Collector):
             self._publish(metrics, False)
 
     def _publish(self, result, sanitize_executor_id=True):
-        for executor_id, executor in result.iteritems():
+        for executor_id, executor in result.items():
             executor_statistics = executor['statistics']
             for key in executor_statistics:
                 value = executor_statistics[key]

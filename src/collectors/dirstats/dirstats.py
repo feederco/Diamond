@@ -11,7 +11,7 @@ from stat import S_ISDIR, S_ISREG
 from time import time
 
 try:
-    import Queue as queue
+    import queue as queue
 except ImportError:
     import queue
 

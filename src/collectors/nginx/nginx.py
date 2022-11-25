@@ -216,9 +216,9 @@ class NginxCollector(diamond.collector.Collector):
                                 int(self.config['req_port']),
                                 self.config['req_path'])
 
-        req = urllib2.Request(url=url, headers=headers)
+        req = urllib.request.Request(url=url, headers=headers)
         try:
-            handle = urllib2.urlopen(req)
+            handle = urllib.request.urlopen(req)
 
             # Test for json payload; indicates nginx+
             if handle.info().gettype() == 'application/json':

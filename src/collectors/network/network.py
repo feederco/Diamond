@@ -99,7 +99,7 @@ class NetworkCollector(diamond.collector.Collector):
                 return None
 
             network_stats = psutil.network_io_counters(True)
-            for device in network_stats.keys():
+            for device in list(network_stats.keys()):
                 network_stat = network_stats[device]
                 results[device] = {}
                 results[device]['rx_bytes'] = network_stat.bytes_recv
@@ -109,12 +109,12 @@ class NetworkCollector(diamond.collector.Collector):
 
         for device in results:
             stats = results[device]
-            for s, v in stats.items():
+            for s, v in list(stats.items()):
                 # Get Metric Name
                 metric_name = '.'.join([device, s])
                 # Get Metric Value
                 metric_value = self.derivative(metric_name,
-                                               long(v),
+                                               int(v),
                                                diamond.collector.MAX_COUNTER)
 
                 # Convert rx_bytes and tx_bytes

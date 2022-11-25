@@ -37,7 +37,7 @@
 #   Made it work with the Ganglia 3.1 data format
 
 
-from __future__ import print_function
+
 from xdrlib import Packer, Unpacker
 import socket
 
@@ -80,7 +80,7 @@ class Gmetric:
     def send(self, NAME, VAL, TYPE='', UNITS='', SLOPE='both',
              TMAX=60, DMAX=0, GROUP=""):
         if SLOPE not in slope_str2int:
-            raise ValueError("Slope must be one of: " + str(self.slope.keys()))
+            raise ValueError("Slope must be one of: " + str(list(self.slope.keys())))
         if TYPE not in self.type:
             raise ValueError("Type must be one of: " + str(self.type))
         if len(NAME) == 0:

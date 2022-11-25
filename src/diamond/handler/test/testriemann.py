@@ -59,9 +59,9 @@ class TestRiemannHandler(unittest.TestCase):
             event = Client.create_dict(call[1][0])
 
             self.assertEqual(event, {
-                'host': u'com.example.www',
-                'service': u'servers.cpu.total.idle',
-                'time': 1234567L,
+                'host': 'com.example.www',
+                'service': 'servers.cpu.total.idle',
+                'time': 1234567,
                 'metric_f': 0.0,
             })
 

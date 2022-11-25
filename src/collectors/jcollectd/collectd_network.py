@@ -32,12 +32,12 @@ from copy import deepcopy
 
 if sys.version_info.major == 2:
     # Python 2.7 io.StringIO does not like unicode
-    from StringIO import StringIO
+    from io import StringIO
 else:
     try:
         from io import StringIO
     except ImportError:
-        from cStringIO import StringIO
+        from io import StringIO
 
 
 DEFAULT_PORT = 25826
@@ -168,7 +168,7 @@ class Data(object):
     typeinstance = None
 
     def __init__(self, **kw):
-        [setattr(self, k, v) for k, v in kw.items()]
+        [setattr(self, k, v) for k, v in list(kw.items())]
 
     @property
     def datetime(self):

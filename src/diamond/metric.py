@@ -74,7 +74,7 @@ class Metric(object):
         """
         Return the Metric as a string
         """
-        if not isinstance(self.precision, (int, int)):
+        if not isinstance(self.precision, int):
             log = logging.getLogger('diamond')
             log.warn('Metric %s does not have a valid precision', self.path)
             self.precision = 0
@@ -93,7 +93,7 @@ class Metric(object):
         )
 
     def __setstate__(self, state):
-        for slot, value in state.items():
+        for slot, value in list(state.items()):
             setattr(self, slot, value)
 
     @classmethod

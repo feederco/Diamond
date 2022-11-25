@@ -8,9 +8,9 @@ import os
 import re
 import subprocess
 try:
-    import Queue
+    import queue
 except ImportError:
-    import queue as Queue
+    from . import queue as Queue
 
 
 from diamond.handler.Handler import Handler
@@ -164,7 +164,7 @@ class RRDHandler(Handler):
 
     def _queue(self, filename, timestamp, value):
         if filename not in self._queues:
-            queue = Queue.Queue()
+            queue = queue.Queue()
             self._queues[filename] = queue
         else:
             queue = self._queues[filename]
@@ -173,7 +173,7 @@ class RRDHandler(Handler):
 
     def flush(self):
         # Grab all current queues.
-        for filename in self._queues.keys():
+        for filename in list(self._queues.keys()):
             self._flush_queue(filename)
 
     def _flush_queue(self, filename):
@@ -203,7 +203,7 @@ class RRDHandler(Handler):
                 if timestamp not in updates:
                     updates[timestamp] = []
                 updates[timestamp].append(value)
-            except Queue.Empty:
+            except queue.Empty:
                 break
 
         # Save the last update time.
@@ -214,10 +214,8 @@ class RRDHandler(Handler):
             # This will look like <time>:<value1>[:<value2>...]
             # The timestamps must be sorted, and we each of the
             # <time> values must be unique (like a snowflake).
-            data_points = map(
-                lambda (timestamp, values): "%d:%s" %
-                (timestamp, ":".join(map(str, values))),
-                sorted(updates.items()))
+            data_points = ["%d:%s" %
+                (timestamp_values[0], ":".join(map(str, timestamp_values[1]))) for timestamp_values in sorted(updates.items())]
 
             # Optimisticly update.
             # Nothing can really be done if we fail.

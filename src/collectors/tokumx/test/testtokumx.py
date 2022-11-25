@@ -84,7 +84,7 @@ class TestTokuMXCollector(CollectorTestCase):
     def test_should_publish_stats_with_long_type(self,
                                                  publish_mock,
                                                  connector_mock):
-        data = {'more_keys': long(1), 'key': 2, 'string': 'str'}
+        data = {'more_keys': int(1), 'key': 2, 'string': 'str'}
         self._annotate_connection(connector_mock, data)
 
         self.collector.collect()
@@ -114,7 +114,7 @@ class TestTokuMXCollector(CollectorTestCase):
     def test_should_ignore_unneeded_collections(self,
                                                 publish_mock,
                                                 connector_mock):
-        data = {'more_keys': long(1), 'key': 2, 'string': 'str'}
+        data = {'more_keys': int(1), 'key': 2, 'string': 'str'}
         self._annotate_connection(connector_mock, data)
 
         self.connection['db1'].collection_names.return_value = ['collection1',
@@ -205,7 +205,7 @@ class TestMongoMultiHostDBCollector(CollectorTestCase):
     def test_should_publish_stats_with_long_type(self,
                                                  publish_mock,
                                                  connector_mock):
-        data = {'more_keys': long(1), 'key': 2, 'string': 'str'}
+        data = {'more_keys': int(1), 'key': 2, 'string': 'str'}
         self._annotate_connection(connector_mock, data)
 
         self.collector.collect()
@@ -236,7 +236,7 @@ class TestMongoMultiHostDBCollector(CollectorTestCase):
     def test_should_ignore_unneeded_collections(self,
                                                 publish_mock,
                                                 connector_mock):
-        data = {'more_keys': long(1), 'key': 2, 'string': 'str'}
+        data = {'more_keys': int(1), 'key': 2, 'string': 'str'}
         self._annotate_connection(connector_mock, data)
 
         self.connection['db1'].collection_names.return_value = ['collection1',

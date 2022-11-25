@@ -27,7 +27,7 @@ xmlrpc_server_path = /var/run/supervisor.sock
 
 """
 
-import xmlrpclib
+import xmlrpc.client as xmlrpclib
 
 try:
     import supervisor.xmlrpc

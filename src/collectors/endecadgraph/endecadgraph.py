@@ -13,7 +13,7 @@ Renzo Toma <rtoma@bol.com>
 
 from urllib.request import urlopen
 import diamond.collector
-from StringIO import StringIO
+from io import StringIO
 import re
 import xml.etree.cElementTree as ElementTree
 
@@ -87,7 +87,7 @@ class EndecaDgraphCollector(diamond.collector.Collector):
             return key
 
         def processElem(elem, keyList):
-            for k, v in elem.items():
+            for k, v in list(elem.items()):
                 prefix = '.'.join(keyList)
                 if k not in self.IGNORE_ELEMENTS and self.NUMVAL_MATCH.match(v):
                     k = makeSane(k)

@@ -67,15 +67,15 @@ class SquidCollector(diamond.collector.Collector):
             squid_sock.connect((host, int(port)))
             squid_sock.settimeout(0.25)
             squid_sock.sendall(
-                "GET cache_object://localhost/counters HTTP/1.0\r\n" +
+                ("GET cache_object://localhost/counters HTTP/1.0\r\n" +
                 "Host: localhost\r\n" +
                 "Accept: */*\r\n" +
-                "Connection: close\r\n\r\n")
+                "Connection: close\r\n\r\n").encode())
 
             fulldata = ''
 
             while True:
-                data = squid_sock.recv(1024)
+                data = squid_sock.recv(1024).decode('utf-8')
                 if not data:
                     break
                 fulldata = fulldata + data
@@ -87,7 +87,7 @@ class SquidCollector(diamond.collector.Collector):
         return fulldata
 
     def collect(self):
-        for nickname in self.squid_hosts.keys():
+        for nickname in list(self.squid_hosts.keys()):
             squid_host = self.squid_hosts[nickname]
 
             fulldata = self._getData(squid_host['host'],

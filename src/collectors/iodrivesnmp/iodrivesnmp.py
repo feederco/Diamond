@@ -106,7 +106,7 @@ class IODriveSNMPCollector(parent_SNMPCollector):
         # Set timestamp
         timestamp = time.time()
 
-        for k, v in self.IODRIVE_STATS.items():
+        for k, v in list(self.IODRIVE_STATS.items()):
             # Get Metric Name and Value
             metricName = '.'.join([k])
             metricValue = int(self.get(v, host, port, community)[v])
@@ -120,7 +120,7 @@ class IODriveSNMPCollector(parent_SNMPCollector):
             # Publish Metric
             self.publish_metric(metric)
 
-        for k, v in self.IODRIVE_BYTE_STATS.items():
+        for k, v in list(self.IODRIVE_BYTE_STATS.items()):
             # Get Metric Name and Value
             metricName = '.'.join([k])
             metricValue = int(self.get(v, host, port, community)[v])

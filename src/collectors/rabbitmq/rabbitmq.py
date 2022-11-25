@@ -24,8 +24,8 @@ Collects data from RabbitMQ through the admin interface
 from urllib.request import Request, urlopen
 import diamond.collector
 import re
-from urllib import urljoin
-from urllib import quote
+from urllib.parse import urljoin
+from urllib.parse import quote
 from base64 import b64encode
 
 try:
@@ -243,7 +243,7 @@ class RabbitMQCollector(diamond.collector.Collector):
             vhost_conf, legacy = self.get_vhost_conf(vhost_names)
 
             # Iterate all vhosts in our vhosts configurations
-            for vhost, queues in vhost_conf.iteritems():
+            for vhost, queues in vhost_conf.items():
                 vhost_name = vhost
                 if self.config['replace_dot']:
                     vhost_name = vhost_name.replace(

@@ -120,7 +120,7 @@ class rmqHandler (Handler):
         """
            Create PUB socket and bind
         """
-        if ((rmq_server in self.connections.keys() and
+        if ((rmq_server in list(self.connections.keys()) and
              self.connections[rmq_server] is not None and
              self.connections[rmq_server].is_open)):
             # It seems we already have this server, so let's try _unbind just
@@ -158,7 +158,7 @@ class rmqHandler (Handler):
                 self.reconnect_interval = 1
             except Exception as exception:
                 self.log.debug("Caught exception in _bind: %s", exception)
-                if rmq_server in self.connections.keys():
+                if rmq_server in list(self.connections.keys()):
                     self._unbind(rmq_server)
 
                 if self.reconnect_interval >= 16:
@@ -184,14 +184,14 @@ class rmqHandler (Handler):
           Destroy instance of the rmqHandler class
         """
         if hasattr(self, 'connections'):
-            for rmq_server in self.connections.keys():
+            for rmq_server in list(self.connections.keys()):
                 self._unbind(rmq_server)
 
     def process(self, metric):
         """
           Process a metric and send it to RMQ pub socket
         """
-        for rmq_server in self.connections.keys():
+        for rmq_server in list(self.connections.keys()):
             try:
                 if ((self.connections[rmq_server] is None or
                      self.connections[rmq_server].is_open is False)):

@@ -37,7 +37,7 @@ class TestTSDBdHandler(unittest.TestCase):
                         host='myhostname', metric_type='GAUGE')
         handler = TSDBHandler(config)
         header = {'Content-Type': 'application/json'}
-        exception = urllib2.HTTPError(url=self.url, code=404, msg="Error",
+        exception = urllib.error.HTTPError(url=self.url, code=404, msg="Error",
                                       hdrs=header, fp=None)
         handler.side_effect = exception
         handler.process(metric)

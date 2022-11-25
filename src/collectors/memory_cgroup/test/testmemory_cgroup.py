@@ -9,9 +9,9 @@ from mock import Mock
 from mock import patch
 
 try:
-    from cStringIO import StringIO
+    from io import StringIO
 except ImportError:
-    from StringIO import StringIO
+    from io import StringIO
 
 from diamond.collector import Collector
 from memory_cgroup import MemoryCgroupCollector
@@ -112,9 +112,9 @@ class TestMemoryCgroupCollector(CollectorTestCase):
             'lxc.testcontainer.total_swap': 1,
         }
         [self.assertPublished(publish_mock, k, v)
-         for k, v in should_be_published.iteritems()]
+         for k, v in should_be_published.items()]
         [self.assertUnpublished(publish_mock, k, v)
-         for k, v in should_not_be_published.iteritems()]
+         for k, v in should_not_be_published.items()]
 
 if __name__ == "__main__":
     unittest.main()

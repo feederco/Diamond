@@ -125,36 +125,36 @@ as cummulative nanoseconds since VM creation if this is True."""
             # Disk stats
             disks = self.get_disk_devices(dom)
             accum = {}
-            for stat in self.blockStats.keys():
+            for stat in list(self.blockStats.keys()):
                 accum[stat] = 0
 
             for disk in disks:
                 stats = dom.blockStats(disk)
-                for stat in self.blockStats.keys():
+                for stat in list(self.blockStats.keys()):
                     idx = self.blockStats[stat]
                     val = stats[idx]
                     accum[stat] += val
                     self.publish('block.%s.%s' % (disk, stat), val,
                                  instance=name)
-            for stat in self.blockStats.keys():
+            for stat in list(self.blockStats.keys()):
                 self.publish('block.total.%s' % stat, accum[stat],
                              instance=name)
 
             # Network stats
             vifs = self.get_network_devices(dom)
             accum = {}
-            for stat in self.vifStats.keys():
+            for stat in list(self.vifStats.keys()):
                 accum[stat] = 0
 
             for vif in vifs:
                 stats = dom.interfaceStats(vif)
-                for stat in self.vifStats.keys():
+                for stat in list(self.vifStats.keys()):
                     idx = self.vifStats[stat]
                     val = stats[idx]
                     accum[stat] += val
                     self.publish('net.%s.%s' % (vif, stat), val,
                                  instance=name)
-            for stat in self.vifStats.keys():
+            for stat in list(self.vifStats.keys()):
                 self.publish('net.total.%s' % stat, accum[stat],
                              instance=name)
 

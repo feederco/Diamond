@@ -27,6 +27,7 @@ import datetime
 from diamond.collector import str_to_bool
 import re
 import zlib
+from functools import reduce
 
 try:
     import pymongo

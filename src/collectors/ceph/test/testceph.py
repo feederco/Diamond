@@ -103,13 +103,13 @@ class TestCephCollectorSocketNameHandling(CollectorTestCase):
         expected = 'ceph.osd.325'
         sock = '/var/run/ceph/ceph-osd.325.asok'
         actual = self.collector._get_counter_prefix_from_socket_name(sock)
-        self.assertEquals(actual, expected)
+        self.assertEqual(actual, expected)
 
     def test_counter_alternate_prefix(self):
         expected = 'ceph.keep-osd.325'
         sock = '/var/run/ceph/keep-osd.325.asok'
         actual = self.collector._get_counter_prefix_from_socket_name(sock)
-        self.assertEquals(actual, expected)
+        self.assertEqual(actual, expected)
 
     @patch('glob.glob')
     def test_get_socket_paths(self, glob_mock):

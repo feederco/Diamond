@@ -81,7 +81,7 @@ class AmavisCollector(diamond.collector.Collector):
                     if res:
                         groups = res.groupdict()
                         name = groups['name']
-                        for metric, value in groups.items():
+                        for metric, value in list(groups.items()):
                             if metric == 'name':
                                 continue
                             mtype = 'GAUGE'

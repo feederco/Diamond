@@ -79,8 +79,8 @@ class DRBDCollector(diamond.collector.Collector):
             self.log.error("Can't read DRBD status file: {}".format(errormsg))
             return
 
-        for resource in results.keys():
-            for metric_name, metric_value in results[resource].items():
+        for resource in list(results.keys()):
+            for metric_name, metric_value in list(results[resource].items()):
                 if metric_value.isdigit():
                     self.publish(resource + "." + metric_name, metric_value)
                 else:

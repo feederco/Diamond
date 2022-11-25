@@ -259,8 +259,8 @@ class FilestatCollector(diamond.collector.Collector):
         # collect open files per user per type
         if self.config['collect_user_data']:
             data = self.process_lsof(self.get_userlist(), self.get_typelist())
-            for ukey in data.iterkeys():
-                for tkey in data[ukey].iterkeys():
+            for ukey in data.keys():
+                for tkey in data[ukey].keys():
                     self.log.debug('files.user.%s.%s %s' % (
                         ukey, tkey, int(data[ukey][tkey])))
                     self.publish('user.%s.%s' % (ukey, tkey),

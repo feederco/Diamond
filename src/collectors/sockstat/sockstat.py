@@ -57,7 +57,7 @@ class SockstatCollector(diamond.collector.Collector):
             self.collect_stat(result, f)
             f.close()
 
-        for key, value in result.items():
+        for key, value in list(result.items()):
             self.publish(key, value, metric_type='GAUGE')
 
     def collect_stat(self, data, f):
@@ -65,6 +65,6 @@ class SockstatCollector(diamond.collector.Collector):
         for line in f:
             match = _RE.match(line)
             if match:
-                for key, value in match.groupdict().items():
+                for key, value in list(match.groupdict().items()):
                     if value:
                         data[key] += int(value)

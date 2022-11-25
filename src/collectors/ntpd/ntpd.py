@@ -96,7 +96,7 @@ class NtpdCollector(diamond.collector.Collector):
             if data['when']['val'].endswith(('m', 'h', 'd')):
                 data['when']['val'] = convert_to_second(data['when']['val'])
 
-        return data.items()
+        return list(data.items())
 
     def get_ntpdc_kerninfo_output(self):
         return self.run_command([self.config['ntpdc_bin'], '-c', 'kerninfo'])
@@ -121,7 +121,7 @@ class NtpdCollector(diamond.collector.Collector):
             elif key == 'status':
                 data['status'] = {'val': val, 'precision': 0}
 
-        return data.items()
+        return list(data.items())
 
     def get_ntpdc_sysinfo_output(self):
         return self.run_command([self.config['ntpdc_bin'], '-c', 'sysinfo'])
@@ -143,7 +143,7 @@ class NtpdCollector(diamond.collector.Collector):
             except Exception:
                 pass
 
-        return data.items()
+        return list(data.items())
 
     def collect(self):
         for stat, v in self.get_ntpq_stats():

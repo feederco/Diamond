@@ -58,7 +58,7 @@ class PingCollector(diamond.collector.ProcessCollector):
         return config
 
     def collect(self):
-        for key in self.config.keys():
+        for key in list(self.config.keys()):
             if key[:7] == "target_":
                 host = self.config[key]
                 metric_name = host.replace('.', '_')

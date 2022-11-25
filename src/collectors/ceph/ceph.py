@@ -38,7 +38,7 @@ def flatten_dictionary(input, sep='.', prefix=None):
       [('a.b', 10), ('c', 20)]
     """
     for name, value in sorted(input.items()):
-        fullname = sep.join(filter(None, [prefix, name]))
+        fullname = sep.join([_f for _f in [prefix, name] if _f])
         if isinstance(value, dict):
             for result in flatten_dictionary(value, sep, fullname):
                 yield result

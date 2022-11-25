@@ -55,7 +55,7 @@ import base64
 from contextlib import closing
 import json
 import re
-import urllib
+import urllib.request, urllib.parse, urllib.error
 
 
 class JolokiaCollector(diamond.collector.Collector):
@@ -136,7 +136,7 @@ class JolokiaCollector(diamond.collector.Collector):
         ]
         if isinstance(self.config['rewrite'], dict):
             self.rewrite.extend([(re.compile(old), new) for old, new in
-                                 self.config['rewrite'].items()])
+                                 list(self.config['rewrite'].items())])
 
         self.domains = []
         if 'domains' in self.config:
@@ -170,7 +170,7 @@ class JolokiaCollector(diamond.collector.Collector):
             listing = self._list_request()
             try:
                 if listing['status'] == 200:
-                    self.domains = listing['value'].keys()
+                    self.domains = list(listing['value'].keys())
                 else:
                     self.log.error('Jolokia status %s while retrieving MBean '
                                    'listing.', listing['status'])
@@ -203,7 +203,7 @@ class JolokiaCollector(diamond.collector.Collector):
                     # The reponse was totally empty, or not an expected format
                     self.log.error('Unable to retrieve domain %s.', domain)
                     continue
-                for k, v in mbeans.iteritems():
+                for k, v in mbeans.items():
                     if self._check_mbean(k):
                         self.collect_bean(k, v)
 
@@ -240,7 +240,7 @@ class JolokiaCollector(diamond.collector.Collector):
 
     def _read_request(self, domain):
         try:
-            url_path = '/?%s' % urllib.urlencode({
+            url_path = '/?%s' % urllib.parse.urlencode({
                 'maxCollectionSize': '0',
                 'ignoreErrors': 'true',
                 'canonicalNaming':
@@ -269,7 +269,7 @@ class JolokiaCollector(diamond.collector.Collector):
         domain = re.sub('!', '!!', domain)
         domain = re.sub('/', '!/', domain)
         domain = re.sub('"', '!"', domain)
-        domain = urllib.quote(domain)
+        domain = urllib.parse.quote(domain)
         return domain
 
     def _create_request(self, url):
@@ -288,7 +288,7 @@ class JolokiaCollector(diamond.collector.Collector):
         return text
 
     def collect_bean(self, prefix, obj):
-        for k, v in obj.iteritems():
+        for k, v in obj.items():
             if type(v) in [int, float]:
                 key = "%s.%s" % (prefix, k)
                 key = self.clean_up(key)

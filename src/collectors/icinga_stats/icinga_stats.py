@@ -23,23 +23,23 @@ class IcingaStatsCollector(diamond.collector.Collector):
         stats = self.parse_stats_file(self.config["status_path"])
         if len(stats) == 0:
             return {}
-        elif "info" not in stats.keys():
+        elif "info" not in list(stats.keys()):
             return {}
-        elif "programstatus" not in stats.keys():
+        elif "programstatus" not in list(stats.keys()):
             return {}
 
         metrics = self.get_icinga_stats(stats["programstatus"])
-        if "hoststatus" in stats.keys():
+        if "hoststatus" in list(stats.keys()):
             metrics = dict(
-                metrics.items() + self.get_host_stats(
-                    stats["hoststatus"]).items())
+                list(metrics.items()) + list(self.get_host_stats(
+                    stats["hoststatus"]).items()))
 
-        if "servicestatus" in stats.keys():
+        if "servicestatus" in list(stats.keys()):
             metrics = dict(
-                metrics.items() + self.get_svc_stats(
-                    stats["servicestatus"]).items())
+                list(metrics.items()) + list(self.get_svc_stats(
+                    stats["servicestatus"]).items()))
 
-        for metric in metrics.keys():
+        for metric in list(metrics.keys()):
             self.log.debug("Publishing '%s %s'.", metric, metrics[metric])
             self.publish(metric, metrics[metric])
 
@@ -68,12 +68,12 @@ class IcingaStatsCollector(diamond.collector.Collector):
     def get_icinga_stats(self, app_stats):
         """ Extract metrics from 'programstatus' """
         stats = {}
-        stats = dict(stats.items() + self._get_active_stats(app_stats).items())
-        stats = dict(stats.items() + self._get_cached_stats(app_stats).items())
+        stats = dict(list(stats.items()) + list(self._get_active_stats(app_stats).items()))
+        stats = dict(list(stats.items()) + list(self._get_cached_stats(app_stats).items()))
         stats = dict(
-            stats.items() + self._get_command_execution(app_stats).items())
+            list(stats.items()) + list(self._get_command_execution(app_stats).items()))
         stats = dict(
-            stats.items() + self._get_externalcmd_stats(app_stats).items())
+            list(stats.items()) + list(self._get_externalcmd_stats(app_stats).items()))
         stats["uptime"] = self._get_uptime(app_stats)
         return stats
 
@@ -106,7 +106,7 @@ class IcingaStatsCollector(diamond.collector.Collector):
                             stats["programstatus"] = tmp_dict
                         else:
                             entity_type = tmp_dict["_type"]
-                            if entity_type not in stats.keys():
+                            if entity_type not in list(stats.keys()):
                                 stats[entity_type] = []
 
                             stats[entity_type].append(tmp_dict)
@@ -221,7 +221,7 @@ class IcingaStatsCollector(diamond.collector.Collector):
             "active_ondemand_service_check_stats",
         ]
         for app_key in app_keys:
-            if app_key not in app_stats.keys():
+            if app_key not in list(app_stats.keys()):
                 continue
 
             splitted = app_key.split("_")
@@ -245,7 +245,7 @@ class IcingaStatsCollector(diamond.collector.Collector):
             "cached_service_check_stats",
         ]
         for app_key in app_keys:
-            if app_key not in app_stats.keys():
+            if app_key not in list(app_stats.keys()):
                 continue
 
             (x01, x05, x15) = self._convert_tripplet(app_stats[app_key])
@@ -268,7 +268,7 @@ class IcingaStatsCollector(diamond.collector.Collector):
             "parallel_host_check_stats",
         ]
         for app_key in app_keys:
-            if app_key not in app_stats.keys():
+            if app_key not in list(app_stats.keys()):
                 continue
 
             scratch = app_key.split("_")[0]
@@ -300,19 +300,19 @@ class IcingaStatsCollector(diamond.collector.Collector):
             "x15": "external_command.15",
         }
         stats = {}
-        if khigh in app_stats.keys() and str(app_stats[khigh]).isdigit():
+        if khigh in list(app_stats.keys()) and str(app_stats[khigh]).isdigit():
             key = aliases[khigh]
             stats[key] = int(app_stats[khigh])
 
-        if ktotal in app_stats.keys() and str(app_stats[ktotal].isdigit()):
+        if ktotal in list(app_stats.keys()) and str(app_stats[ktotal].isdigit()):
             key = aliases[ktotal]
             stats[key] = int(app_stats[ktotal])
 
-        if kused in app_stats.keys() and str(app_stats[kused].isdigit()):
+        if kused in list(app_stats.keys()) and str(app_stats[kused].isdigit()):
             key = aliases[kused]
             stats[key] = int(app_stats[ktotal])
 
-        if kstats in app_stats.keys():
+        if kstats in list(app_stats.keys()):
             (x01, x05, x15) = self._convert_tripplet(app_stats[kstats])
             stats[aliases["x01"]] = x01
             stats[aliases["x05"]] = x05
@@ -322,7 +322,7 @@ class IcingaStatsCollector(diamond.collector.Collector):
 
     def _get_uptime(self, app_stats):
         """ Return Icinga's uptime """
-        if "program_start" not in app_stats.keys():
+        if "program_start" not in list(app_stats.keys()):
             return 0
 
         if not app_stats["program_start"].isdigit():
@@ -370,11 +370,11 @@ class IcingaStatsCollector(diamond.collector.Collector):
             "passive_checks_enabled": "passive_checks",
         }
         sane = {}
-        for akey in aliases.keys():
+        for akey in list(aliases.keys()):
             sane[aliases[akey]] = None
 
-        aliases_keys = aliases.keys()
-        for key in entity.keys():
+        aliases_keys = list(aliases.keys())
+        for key in list(entity.keys()):
             if key not in aliases_keys:
                 continue
 

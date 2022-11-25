@@ -52,7 +52,7 @@ class PgQCollector(diamond.collector.Collector):
             self.log.error('Unable to import module psycopg2')
             return None
 
-        for instance, configuration in self.config['instances'].iteritems():
+        for instance, configuration in self.config['instances'].items():
             connection = psycopg2.connect(configuration['dsn'])
             connection.set_isolation_level(
                 psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT,
@@ -63,13 +63,13 @@ class PgQCollector(diamond.collector.Collector):
         """Collects metrics for a named connection."""
         with connection.cursor() as cursor:
             for queue, metrics in self.get_queue_info(instance, cursor):
-                for name, metric in metrics.items():
+                for name, metric in list(metrics.items()):
                     self.publish('.'.join((instance, queue, name)), metric)
 
         with connection.cursor() as cursor:
             consumers = self.get_consumer_info(instance, cursor)
             for queue, consumer, metrics in consumers:
-                for name, metric in metrics.items():
+                for name, metric in list(metrics.items()):
                     key_parts = (instance, queue, 'consumers', consumer, name)
                     self.publish('.'.join(key_parts), metric)
 

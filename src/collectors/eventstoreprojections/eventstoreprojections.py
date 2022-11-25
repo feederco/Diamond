@@ -60,7 +60,7 @@ class EventstoreProjectionsCollector(diamond.collector.Collector):
 
     def _json_to_flat_metrics(self, prefix, data):
 
-        for key, value in data.items():
+        for key, value in list(data.items()):
             if isinstance(value, dict):
                 for k, v in self._json_to_flat_metrics(
                         "%s.%s" % (prefix, key), value):

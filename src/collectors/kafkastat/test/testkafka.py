@@ -61,7 +61,7 @@ class TestKafkaCollector(CollectorTestCase):
     @run_only_if_ElementTree_is_available
     @patch('urllib2.urlopen')
     def test_get_httperror(self, urlopen_mock):
-        urlopen_mock.side_effect = urllib2.URLError('BOOM')
+        urlopen_mock.side_effect = urllib.error.URLError('BOOM')
 
         result = self.collector._get('/path')
 
@@ -108,10 +108,10 @@ class TestKafkaCollector(CollectorTestCase):
         get_mock.return_value = self._get_xml_fixture('mbean.xml')
 
         expected_metrics = {
-            'kafka.logs.mytopic-1.CurrentOffset': long('213500615'),
-            'kafka.logs.mytopic-1.NumAppendedMessages': long('224634137'),
+            'kafka.logs.mytopic-1.CurrentOffset': int('213500615'),
+            'kafka.logs.mytopic-1.NumAppendedMessages': int('224634137'),
             'kafka.logs.mytopic-1.NumberOfSegments': int('94'),
-            'kafka.logs.mytopic-1.Size': long('50143615339'),
+            'kafka.logs.mytopic-1.Size': int('50143615339'),
         }
 
         metrics = self.collector.query_mbean('kafka:type=kafka.logs.mytopic-1')
@@ -124,10 +124,10 @@ class TestKafkaCollector(CollectorTestCase):
         get_mock.return_value = self._get_xml_fixture('mbean.xml')
 
         expected_metrics = {
-            'some.prefix.CurrentOffset': long('213500615'),
-            'some.prefix.NumAppendedMessages': long('224634137'),
+            'some.prefix.CurrentOffset': int('213500615'),
+            'some.prefix.NumAppendedMessages': int('224634137'),
             'some.prefix.NumberOfSegments': int('94'),
-            'some.prefix.Size': long('50143615339'),
+            'some.prefix.Size': int('50143615339'),
         }
 
         metrics = self.collector.query_mbean('kafka:type=kafka.logs.mytopic-0',

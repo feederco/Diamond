@@ -281,7 +281,7 @@ class SentryHandler(Handler):
         """
         output = []
         # validate configuration, skip invalid section
-        for key_name, section in self.config.items():
+        for key_name, section in list(self.config.items()):
             rule = self.compile_section(section)
             if rule is not None:
                 output.append(rule)
@@ -300,7 +300,7 @@ class SentryHandler(Handler):
             return
 
         # name and path are mandatory
-        keys = section.keys()
+        keys = list(section.keys())
         for key in ('name', 'path'):
             if key not in keys:
                 self.log.warning("section %s miss key '%s' ignore", key,

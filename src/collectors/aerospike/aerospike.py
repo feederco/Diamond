@@ -136,7 +136,7 @@ class AerospikeCollector(diamond.collector.Collector):
 
                     # Create metrics dict for the namespace/histogram pair
                     dataset = datasets[i].split(',')[1:]
-                    metrics = dict(zip(fields, dataset))
+                    metrics = dict(list(zip(fields, dataset)))
 
                     # Publish a metric for each field in the histogram
                     for field in fields:
@@ -156,11 +156,11 @@ class AerospikeCollector(diamond.collector.Collector):
             ) = data.split(';')[1::2]
 
             # Collapse each type of data line into a dict of metrics
-            for op_type in raw_lines.keys():
-                metrics = dict(zip(fields, raw_lines[op_type].split(',')[1:]))
+            for op_type in list(raw_lines.keys()):
+                metrics = dict(list(zip(fields, raw_lines[op_type].split(',')[1:])))
 
                 # publish each metric
-                for metric in metrics.keys():
+                for metric in list(metrics.keys()):
                     self.publish_gauge('latency.%s.%s' %
                                        (op_type, metric), metrics[metric])
 
@@ -206,7 +206,7 @@ class AerospikeCollector(diamond.collector.Collector):
                 raw_lines['query'],
             ) = data.split(';')[1::2]
 
-            for op_type in raw_lines.keys():
+            for op_type in list(raw_lines.keys()):
                 metric = raw_lines[op_type].split(',')[1]
                 self.publish_gauge('throughput.%s' % op_type, metric)
 

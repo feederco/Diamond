@@ -120,7 +120,7 @@ class SNMPRawCollector(parent_SNMPCollector):
             return
 
         # because we only allow 1-key dicts, we can pick with absolute index
-        value = data.items()[0][1]
+        value = list(data.items())[0][1]
         return value
 
     def _get_value(self, device, oid, host, port, community):
@@ -162,7 +162,7 @@ class SNMPRawCollector(parent_SNMPCollector):
 
         dev_config = self.config['devices'][device]
         if 'oids' in dev_config:
-            for oid, metricName in dev_config['oids'].items():
+            for oid, metricName in list(dev_config['oids'].items()):
 
                 if (device, oid) in self.skip_list:
                     self.log.debug(

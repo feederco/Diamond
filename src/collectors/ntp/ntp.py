@@ -88,7 +88,7 @@ class NtpCollector(diamond.collector.ProcessCollector):
             data[metric_name] = {'val': offset,
                                  'precision': self.config['precision']}
 
-        return data.items()
+        return list(data.items())
 
     def collect(self):
         for stat, v in self.get_ntpdate_stats():

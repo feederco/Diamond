@@ -99,7 +99,7 @@ class SolrCollector(diamond.collector.Collector):
             # If no core is specified, provide statistics for all cores
             result = self._get('/solr/admin/cores?action=STATUS&wt=json')
             if result:
-                cores = result['status'].keys()
+                cores = list(result['status'].keys())
 
         metrics = {}
         for core in cores:
@@ -131,7 +131,7 @@ class SolrCollector(diamond.collector.Collector):
                 continue
 
             s = result['solr-mbeans']
-            stats = dict((s[i], s[i + 1]) for i in xrange(0, len(s), 2))
+            stats = dict((s[i], s[i + 1]) for i in range(0, len(s), 2))
 
             if 'core' in self.config['stats']:
                 core_searcher = stats["CORE"]["searcher"]["stats"]

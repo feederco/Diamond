@@ -71,7 +71,7 @@ class ScribeCollector(diamond.collector.Collector):
             metric = self.key_to_metric(key)
             data[metric] = int(val)
 
-        return data.items()
+        return list(data.items())
 
     def collect(self):
         for stat, val in self.get_scribe_stats():

@@ -87,7 +87,7 @@ class DockerCollector(diamond.collector.Collector):
         for container in running_containers:
             name = "containers." + "".join(container['Names'][0][1:])
             s = client.stats(container["Id"])
-            stat = json.loads(s.next())
+            stat = json.loads(next(s))
             for path in self.METRICS:
                 val = self.get_value(path, stat)
                 if val is not None:

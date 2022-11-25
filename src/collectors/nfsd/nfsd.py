@@ -189,9 +189,9 @@ class NfsdCollector(diamond.collector.Collector):
             # Close File
             file.close()
 
-            for stat in results.keys():
+            for stat in list(results.keys()):
                 metric_name = '.' + stat
-                metric_value = long(float(results[stat]))
+                metric_value = int(float(results[stat]))
                 metric_value = self.derivative(metric_name, metric_value)
                 self.publish(metric_name, metric_value, precision=3)
             return True

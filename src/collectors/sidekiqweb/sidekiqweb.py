@@ -55,9 +55,9 @@ class SidekiqWebCollector(diamond.collector.Collector):
             return {}
 
         for k in j:
-            for item, value in j[k].items():
+            for item, value in list(j[k].items()):
 
-                if isinstance(value, (str, unicode)) and 'M' in value:
+                if isinstance(value, str) and 'M' in value:
                     value = float(value.replace('M', ''))
                     for unit in self.config['byte_unit']:
                         unit_value = diamond.convertor.binary.convert(
